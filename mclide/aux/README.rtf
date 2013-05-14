@@ -1,0 +1,114 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fnil\fcharset0 BlackmoorLetPlain;\f1\fswiss\fcharset0 Helvetica;\f2\froman\fcharset0 Palatino-Roman;
+\f3\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red30\green0\blue238;}
+{\info
+{\title MCLIDE}
+{\author Terje Norderhaug}
+{\*\company in\'95Progress}}\margl1440\margr1440\vieww20300\viewh16620\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\b\fs74 \cf0 MCLIDE
+\f1\b0\fs30 \up8 \super \'99
+\fs26 \up0 \nosupersub \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl48\slmult1\ql\qnatural\pardirnatural
+
+\f2\i \cf0      by Terje Norderhaug
+\i0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+\cf0 \
+
+\b terje@in-progress.com\
+{\field{\*\fldinst{HYPERLINK "http://mclide.in-progress.com"}}{\fldrslt mclide.in-progress.com}}\
+\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 MCLIDE is a free open source Macintosh IDE for Lisp implementations on any platform.
+\b0  It is a 
+\b double-clickable, stand-alone Mac application that connects locally or through the network to Lisp 
+\b0 using the {\field{\*\fldinst{HYPERLINK "http://common-lisp.net/project/slime/?id=uhkqi"}}{\fldrslt \cf2 \ul \ulc2 Slime/Swank}} protocol. You can use MCLIDE on the same computer as your Lisp system, or target Lisp implementations on other computers and operating systems.\
+MCLIDE's user interface is 
+\b inspired by the mature IDE of {\field{\*\fldinst{HYPERLINK "http://en.wikipedia.org/wiki/Macintosh_Common_Lisp?id=uhkqi"}}{\fldrslt \cf2 \ul \ulc2 Macintosh Common LISP}} (MCL).
+\b0  It provides remote listeners to evaluate expressions on the target Lisp systems. Expressions can also be executed from the built-in text editor. The application provides 
+\b rich development and debugging tools in the form of dialogs
+\b0  for Backtrace, Restarts, Inspection, Tracing, Stepping, Documentation, Apropos, Callers, Backtrace and Restarts, all interacting with the target Lisp.\
+MCLIDE 2 requires MacOSX 10.6 or higher (in 64 bit mode). It needs either a Lisp implementation installed on the same computer, or network access to a  {\field{\*\fldinst{HYPERLINK "http://common-lisp.net/project/slime/?id=uhkqi"}}{\fldrslt \cf2 \ul \ulc2 Swank}} server running on a target Lisp implementation (although it also provides its own built-in Common LISP) .\
+
+\b Use the Update item on the MCLIDE menu to get the latest advances
+\b0  to the application. If you encounter any problems when using MCLIDE, your first remedy is to make sure you have the most recent update, as the issue may already have been fixed.\
+This is a 
+\b preview
+\b0  version of MCLIDE 2, made available not only for your enjoyment, but also for the purpose of getting feedback. Your participation is essential to make MCLIDE as usable as possible, so 
+\b please don't hesitate sending an email if you have suggestions
+\b0  for improvements. \
+
+\b\fs38 Mailing List
+\b0\fs26 \
+The mclide-talk mailing list provides a community for lisp developers using MCLIDE. Subscribe using the form at: \
+	http://mclide.in-progress.com/listmaster\
+Alternatively subscribe by sending an email to:\
+	mclide-talk-subscribe@in-progress.com\
+The body of the message should contain a line with your email address optionally followed by your name.\
+
+\b\fs38 Quick Start\
+
+\fs26 To set up MCLIDE with a target lisp:
+\b0 \
+1. Load the start-swank.lisp file found in the MCLIDE distribution into your lisp implementation of choice.\
+2. Note the reported port number of the open swank server ("Swank started at port...").\
+3. Open MCLIDE's Connect Lisp dialog from the New Listener submenu of the File menu (File -> Connect Lisp).\
+4. Type the port number of the open swank server into the dialog. Keep the 
+\i host
+\i0  field empty for the default "loopback interface" used by swank.\
+5. Click the Connect button. After a brief delay, a Listener window for the target lisp will appear.\
+6. Type in a form in the Remote Listener, e.g. 
+\f3\fs20 (lisp-implementation-type) 
+\f2\fs26 and evaluate by hitting Enter (or shift-Return).\
+You can also use these steps to connect to a lisp over the network. For a secure connection, consider using e.g. 
+\i ssh
+\i0  in the terminal to open a tunnel rather than providing an explicit host in the dialog. \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs38 \cf0 Next Steps
+\b0\fs26 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b \cf0 Evaluate Lisp by typing a form in the listener or editor window and hit the Enter key
+\b0  (or shift-Return) on the keyboard. Use the Apropos dialogs on the Tools menu to learn more about the Lisp environment associated with the topmost listener. Explore the other dialogs as well, such as the Inspector and Processes. Check out the powerful Backtrace dialog when breaking into a program error.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs38 \cf0 Customization
+\b0\fs26 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b \cf0 MCLIDE loads an optional "init.lisp" file
+\b0  on startup, after all plug-ins have been loaded. You can use this to customize the initial development environment, for example by automatically activate and connect to lisp implementations, create listeners or open files. The file should be in the same folder as the application.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs38 \cf0 Known Issues
+\b0\fs26 \
+\pard\pardeftab720\ql\qnatural
+\cf0 \'95 An empty ~/.slime-secret file may cause trouble when manually connecting to a local lisp implementation.\
+ \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs38 \cf0 Troubleshooting
+\b0\fs26 \
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 We all know that superb software never fails, and MCLIDE is no exception. In the rare, inconceivable circumstance that you encounter a problem, it is obviously an issue with the hardware or some Microsoft software on your system, if not static interference from a Windows machine in the vicinity, sunspots, global warming, or simply just rampant imagination. Wipe the disk clean and reinstall everything (twice) in a climate-controlled clean-room.\
+At least that's what they would say if you contact the customer support hotline in Bangalore. Fortunately, 
+\b MCLIDE provides ways for savvy developers to figure out what's going on
+\b0 : \
+1. Check out the gibberish in the 
+\b MCLIDE log files
+\b0  found in <~/Library/Logs/com.in-progress.mclide2/>. You can use Open Quickly from the File menu of the Console application. To log the swank event communication in and out of MCLIDE, set SWANK::*LOG-EVENTS* to T in the remote lisp implementation.\
+2. MCLIDE is open source. You really have no excuse, as long as you are the personality that still eat sausages after visiting the factory. 
+\b All the source files are in the application package.
+\b0  Hold down the Control key and click on the application icon in the Finder to Show Package Contents. Then roll up your sleeves. The bugs only come out after nightfall.\
+3. 
+\b Open a MCLIDE listener
+\b0  from the New Listener item of the File menu, and connect using the default port to get a listener for the built-in Common Lisp. With the MCLIDE listener on top, you have its lisp environment at your fingertips to debug the application itself. Apropos and Trace are your friends. Enjoy!\
+In any case, 
+\b don't let any of this stop you from sending me an email
+\b0  to terje@in-progress.com if you have feedback or suggestions for improvements!\
+\
+}

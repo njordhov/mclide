@@ -1,0 +1,122 @@
+;; Settings to start various lisp implementations and projects for MCLIDE.
+;; Attempts to resemble the SLIME configuration format.
+;;
+;; $exec = posix path to the possibly executable file selected in the Start Lisp dialog.
+;; $resources = posix path to the Resources folder in the MCLIDE distribution.
+;; $init = result from :init function called with path to swank port file.
+
+(|Clozure| ("\"$exec\" -l \"$loader\" -e \"$initform\"")
+   :help "Clozure needs the swank starting forms as a command argument. It cannot be piped to the application input."
+   :type :clozure)
+
+(|Allegro| ("\"$exec\" -L \"$loader\" -e \"$initform\"")
+    :type :allegro)
+
+(CLISP ("tmp=$(mktemp -t 'mclide') ;"
+         "echo \"(cl:load \\\"$loader\\\")\" > $tmp ;"
+         "echo \"$initform\" >> $tmp ;"
+         "lisp=(\"$exec\") ;"
+         "\"$lisp\" -i \"$tmp\" ;")
+   :type :clisp)
+
+(|Clojure| ("(echo $init; echo; cat - ; ) | java -cp \"$exec\":\"$resources\"/clojure/swank/src clojure.main")
+   :type :clojure)
+
+;; SBCL needs the --core to bypass bug in run-sbcl.lisp causing failure on space in pathname
+
+(|SBCL| ("\"$exec\" --load \"$loader\" --eval \"$initform\" --core \"`dirname '$exec'`/lib/sbcl/sbcl.core\"") 
+   :help "Can start the sbcl binary or run-sbcl.sh (assuming the latter is set to be executable)"
+   :type :sbcl)
+
+
+(|MCL| ("load=$(mktemp \"$exec.swank-loader.cfsl.XXXXXX\"); mv \"$init\" \"$load\"; open -a \"$exec\" \"$load\"; (sleep 60; mv \"$load\" \"$init\")& ")
+   :type :mcl)
+
+(|LispWorks| ("tmp=$(mktemp -t 'mclide') ;"
+            "echo \"(cl:load \\\"$loader\\\")\" > $tmp ;"
+            "echo \"$initform\" >> $tmp ;"
+            "lisp=(\"$exec\") ;"
+            "\"$lisp\" -init \"$tmp\" ;")
+  :help "Assumes that the selected executable is the LispWorks application bundle (not the Personal edition)"
+  :type :lispworks)
+
+(|MCLIDE| ("\"$exec\" -l \"$loader\" -e \"$initform\"")
+   :type :clozure
+   :actions #.(let* ((path (full-pathname #P"resources:mclide-hg-clone;"))
+                     (posix (ccl::posix-namestring path)))
+                (labels ((command (control &rest args)
+                           (with-output-to-string (out)
+                             (format out  "(cd ~S; " posix)
+                             (apply #'format out control args)
+                             (format out ") 2>&1")))
+                         (execute (command &rest args &aux (out (front-window :class *default-listener-class*) ))
+                           (let ((exc (apply #'command command args)))
+                             (write-line exc out)
+                             (ccl::execute-shell-command exc :output-stream out)))
+                         (hg (control &rest args)
+                           (apply #'execute (concatenate 'string "/usr/local/bin/hg " control) args)))
+                  
+                  `(("Sources"
+                     ,(lambda()
+                          (unless (probe-file path) #+ignore (create-directory path :if-exists NIL)
+                            ;; cannot cd to path as it doesn't exist
+                            (ccl::execute-shell-command 
+                             (format nil "/usr/local/bin/hg http://mclide.googlecode.com ~S/" #\~ posix)
+                             :output-stream (front-window :class *default-listener-class*)))
+                          (show-source-browser path)))
+                    ("-" NIL)
+                    ("Pull" 
+                     ,(lambda ()
+                        (hg "pull -u;")))
+                    ("Update" 
+                     ,(lambda ()
+                        (hg "update;")))
+                    ("Status" 
+                     ,(lambda ()
+                        (hg "status;")))
+                    ("Commit"
+                     ,(lambda ()
+                        (catch-cancel
+                          (let ((message (get-string-from-user "Message:" :window-title "Commit")))
+                            (hg "commit -m ~S" message)))))
+                    ("Push"
+                     ,(lambda ()
+                        (when (y-or-n-dialog "Really push?")
+                          (hg "push"))))
+                    ("-" ,(lambda ()()))
+                  ("Build MCLIDE1"
+                   ,(lambda ()
+                     (load (full-pathname (merge-pathnames path "build-mclide.lisp")))
+                     (write-line "Building completed.")))
+                  ("Build MCLIDE2"
+                   ,(lambda ()
+            (let ((*features* *features*)
+                  (cl-user::*clozure-directory*
+                                  (probe-posix (slot-value (slot-value (slot-value (remote::remote-lisp) 'listener) 'ccl::lisp) 'autostart::exec))))
+                           (declare (special cl-user::*clozure-directory*))
+                (ccl::add-feature :clz)
+                            (load (full-pathname (merge-pathnames path "build-mclide.lisp")))
+                            (write-line "Building completed."))))))))
+
+
+#+ignore
+(|Gambit| ("gsi -:dar \"$exec\"")
+          :default "swank-gambit.scm"
+          :init nil
+          :help "Get swank for Gambit from http://github.com/jlongster/swank-gambit")
+
+#+ignore
+(lispworks-personal ("open" "-a" "$exec")
+ :message "Requires manual loading of Swank")
+
+#+ignore
+(abcl ("abcl"))
+
+#+ignore
+(acl ("acl"))
+
+#+ignore
+(|CMUCL| ("cmucl" "-quiet"))
+
+#+ignore
+(|Other| ("open -a \"$exec\""))

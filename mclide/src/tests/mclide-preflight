@@ -1,0 +1,380 @@
+== MCLIDE PREFLIGHT ==
+
+Listener/REPL:
+- Start lisp implementation using the Start Lisp dialog => Listener window.
+- New Listener menu item => another listener.
+- Type in (+ 1 2) in listener, then Enter => '3' is printed as result.
+- Evaluate (break) in the Listener => Break loop entered on level 1 (possibly also showing the backtrace dialog)
+- Command-. to abort => back to prompt.
+
+Backtrace:
+- Evaluate (/ 1 0) in the Listener, Command-B => Break loop entered on level 1, backtrace dialog.
+- Select first item in top pane backtrace dialog => Local bindings listed in bottom pane.
+- Double-click on an item in the top pane => opened in the inspector.
+- Double-click on an item in the bottom pane => opened in the inspector.
+- Close the backtrace dialog.
+
+Restarts:
+- Evaluate (/ 1 0) in the Listener.
+- Command-\ to get the Restarts dialog.
+- Do restart "Return to Toplevel"
+
+Package Placard:
+- Click package placard on listener => expanded package menu.
+- Select another package on the package placard => other package selected.
+
+Lisp Shortcuts
+- Type the symbol of a function into the editor or listener. Place cursor next to it.
+-  Verify the shortcuts on the Lisp menu: Documentation, Definition, callers, Inspect.
+
+Apropos:
+- Open the Apropos dialog (optionally select a symbol first).
+- Do apropos for a symbol.
+- Select Inspect (if active) => inspector.
+- Select Callers => Callers dialog.
+- Select Doc => Documentation dialog.
+- Change Type to "Class".
+- Apropos the symbol "class" in the common-lisp package.
+- Click the methods button => dialog listing methods.
+- Click Initargs button => dialog listing initargs.
+
+
+== START ALLEGRO (MCLIDE2 ONLY) ==
+
+1. Start MCLIDE2
+2. Select the mlisp or alisp executable in the Start Allegro dialog.
+
+=> There should be a new listener with a welcome message and a prompt.
+
+
+
+== CANCEL START ALLEGRO (MCLIDE2 ONLY) ==
+
+1. Start MCLIDE2
+2. Click the Cancel button in the dialog
+3. Select New Listener from the File menu
+
+=> There should be a Start Allegro dialog
+
+
+
+
+== SIMPLE EVALUATION ==
+
+1. Evaluate in listener:
+
+(+ 1 2)
+
+=> 
+
+ 3
+ ?
+
+
+
+
+== BREAK ==
+
+1. Evaluate:
+
+(break)
+
+=> Error in ... process repl-thread: Break
+> Type Command-/ to continue, Command-. to abort.
+> If continued: Return from BREAK.
+See the RestartsÉ menu item for further choices.
+
+2. Type Command-.
+
+=> Aborted
+? 
+
+Note that the messages on break and abort may differ from above, but should make sense.
+
+== CONTINUE AFTER BREAK ==
+
+1. Evaluate:
+
+(break)
+
+=> Error in ... process repl-thread: Break
+> Type Command-/ to continue, Command-. to abort.
+> If continued: Return from BREAK.
+See the RestartsÉ menu item for further choices.
+
+; Type Command-/
+
+1 > 
+Aborted
+1 > 
+? 
+
+Verify that the feedback is reasoable. It may vary between implementations.
+
+
+
+== DOUBLE ERROR BREAK ==
+
+? (/ 1 0)
+1 > (/ 2 0)
+2>
+
+cmd-. cmd-. should return to toplevel.
+
+== PROVIDE RESTART VALUE ==
+
+Type in an unbound symbol, e.g.:
+
+? x
+
+Select the restart (double-click) to provide a value for the symbol.
+
+The Restarts dialog should go away.
+
+Type in a value in the Listener, then Return.
+
+== WRITE TO STANDARD OUTPUT ==
+
+? (write 'hello)
+HELLO
+HELLO
+
+Output may vary between implementations.
+
+
+
+== READ FROM STANDARD INPUT ==
+
+? (read)
+abc
+ABC
+
+The reading requires typing a return after the text.
+
+== ARGLIST ==
+
+Type into listener followed by a space:
+
+? (list
+
+The arglist should be displayed.
+
+
+== INTERRUPT ==
+
+Type into listener:
+
+? (sleep 99)
+
+Type cmd-, to interrupt the execution and return to the prompt.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; RESTARTS
+
+
+== EXIT LEVEL 1 RESTART ==
+
+; Evaluate:
+(/ 1 0)
+=> Error in ... DIVISION-BY-ZERO detected.
+performing TRUNCATE on (1 0)
+Type Command-. to abort.
+See the RestartsÉ menu item for further choices.
+
+; Type command-\
+; => Restarts dialog
+; Pick "Return to break level 1"
+=>
+1 > 
+Invoking restart: Return to break level 1.
+Aborted
+1 >
+
+== EXIT TO TOPLEVEL ==
+
+; Evaluate:
+(/ 1 0)
+
+; Type command-\
+; => Restarts dialog
+; Pick "Return to toplevel"
+=>
+Invoking restart: Return to toplevel.
+Aborted
+? 
+
+== DEFAULT RESTARTS ==
+
+; Evaluate:
+(/ 1 0)
+
+; Type command-\
+; => Restarts dialog
+
+Test the rest of the restarts.
+
+== CUSTOM RESTARTS ==
+
+Evaluate:
+
+(restart-case
+    (error "This is an error")
+    (ignore ()
+            :report "Go on"
+            T))
+
+Verify that the error is reported.
+Verify that there is a restart with the report message.
+Activating the restart should result in the expected value.
+
+== RESTART SETTING VALUE ==
+
+Evaluate an unbound symbol:
+
+? q
+
+Restart using the set variable option with say 97 as value.
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; BACKTRACE
+
+? (/ 1 0)
+
+Open up the backtrace dialog and verify that it matches.
+
+Test that items open in Inspect.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CALLERS (MCLIDE1 only)
+
+;; ed-edit-callers Ctrl-c or Ctrl-Meta-c
+
+; Type:
+(foobar
+; Type Ctrl-c
+=> There are no callers of FOOBAR.
+
+; Type:
+(mapcar
+; Type Ctrl-c
+=> Callers of mapcar dialog
+
+=> Get Info dialog with callers for mapcar
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DEFINITION (MCLIDE1 only)
+;; ed-edit-definition  opt-. ctrl-opt-click or opt-command-click
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; INSPECT
+
+;; MCLIDE1: ed-inspect-current-sexp Help
+
+Type into the listener:
+
+? (list 1 2 3)
+
+With the cursor after, type the inspect cmd.
+
+Verify that it shows up in the Inspector. 
+Use the browser to navigate around.
+
+Without closing the first inspector, open a second: 
+
+? (inspect (list 4 5 6))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ABOUT
+
+Open the About dialog from the MCLIDE menu.
+
+Verify that the contents is as expcted, including that the copyright is assigned both to Terje Norderhaug and to Clozure.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PREFERENCES
+
+Open the Preferences dialog from the MCLIDE menu.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; EDITOR
+
+Use the File menu to create a New editor window.
+
+Type in an expression, such as 
+
+(list 1 2 3)
+
+Execute the expression in the topmost listener by placing the cursor after and type the Enter button (fn-return).
+
+Execute the expression in the topmost listener by placing the cursor after and do Execute Expression (cmd-E).
+
+Execute the expression in the topmost listener by selecting the expression and do Execute Expression (cmd-E).
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; APROPOS
+
+Open the Apropos dialog from the Tools menu.
+
+Type in 'first' into the field. Hit return.
+
+There should be a number of mathcing symbols.
+
+Select the symbol 'first' and verify that there is a documentation in the dialog.
+
+Control-click on the symbol "first' from the list. Select Inspect and verify that it is shown in the Inspector.
+
+Control-click on the symbol "first' from the list. Select Edit Source and verify that it shows up in the editor (if supported by implementation).
+
+Double-click on the symbol should do the same as Edit Source.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PROCESSES
+
+Open the Processes dialog from the Tools menu.
+
+Double-click on a process and verify that it is opened in the Inspector.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GET INFO
+;; ed-info-current-sexp  Command-i  C-x-C-i
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; DOCUMENTATION
+;; MCLIDE1: ed-get-documentation C-x-C-d
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; GET INFO
+
+(in-package :ccl)
+
+#| Peter:
+[Get Info] on LISP-IMPLEMENTATION-VERSION [Documentation] = bug:
+"Version 1.3-r12394M  (DarwinPPC32)"
+?
+ Error in process Remote Listener: No applicable method for args:
+(#<CCL::FRONT-LISTENER-TERMINAL-IO #x2220A26>)
+                                   to #<STANDARD-GENERIC-FUNCTION VIEW-SIZE #x2246DB6>
+ While executing: #<CCL::STANDARD-KERNEL-METHOD NO-APPLICABLE-METHOD (T)>
+|#
+
+(window-select (front-remote-listener))
+
+(edit-anything-dialog nil (string 'lisp-implementation-version) :common-lisp-user)
+
+(do-anything :documentation)
+
+;; if it fails, error above is written to the remote listener
+
+== SEARCH DIALOG ==
+
+M2: Delete the file path. Verify that app doesn't crash (flaw in Clozure 1.7).
+
+
+         
+      
+   
+    
