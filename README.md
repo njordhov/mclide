@@ -5,7 +5,7 @@ Macintosh IDE for Lisp-related languages.
 
 Download prebuilt version:
 
-https://mclide.googlecode.com
+https://mclide.com
 
 == Build ==
 
