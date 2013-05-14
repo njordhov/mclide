@@ -13,11 +13,15 @@ Preliminary instructions to get started:
 
 3. Locate the following directories and copy them here:
 
-   ccl/
-   lib/
-   slime/
+  * Contents/Resources/ccl/
 
-4. Execute in shell to build MCLIDE:
+  * Contents/Resources/lib/
+
+  * Contents/resources/slime-2012-02-02/
+
+4. Rename 'slime-2012-02-02' to 'slime'
+
+5. Execute in shell to build MCLIDE:
 
    $ sh ./build.sh
 
