@@ -1,8 +1,10 @@
 .DS_Store
 *~
 /ccl
+/ccl-*
 /lib
 /slime
 /MCLIDE*
 /*.tar.gz
+/*.tar
 /*.dmg
