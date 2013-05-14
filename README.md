@@ -7,11 +7,13 @@ Macintosh IDE for Lisp-related languages.
 
 Preliminary instructions to get started:
 
-  1. Download MCLIDE 2 from http://mclide.com
+  1. Open a Terminal and change directory to here.
 
-  2. Open the application package by control-clicking on the icon
+  2. Download MCLIDE 2:
 
-  3. Open a shell and change directory to here.
+     $ curl -C - -O https://mclide.googlecode.com/files/MCLIDE-20a0-b95dbee-.dmg
+
+  3. Open the application package by control-clicking on the icon
 
   4. Locate the following directories and copy them here:
 
