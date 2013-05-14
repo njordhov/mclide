@@ -2,4 +2,4 @@
 #
 # Run to build MCLIDE
 
-./ccl/dx86cl64 -b --load "./mclide/build.lisp"
+./ccl/dx86cl64 --batch --no-init --load "./mclide/build.lisp"
