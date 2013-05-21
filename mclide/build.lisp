@@ -1,4 +1,4 @@
-; builds the bundle distribution of the open mcl ide.
+; Builds the bundle distribution of mclide.
 ;
 ; Terje Norderhaug <terje@in-progress.com>
 

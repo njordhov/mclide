@@ -4,7 +4,7 @@
 /ccl-*
 /lib
 /slime
-/MCLIDE*
+/MCLIDE *
 /*.tar.gz
 /*.tar
 /*.dmg
