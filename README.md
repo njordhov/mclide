@@ -1,11 +1,11 @@
 MCLIDE
 ======
 
-Macintosh IDE for Lisp-related languages.
-
-Download prebuilt version:
+Macintosh IDE for Clojure and other Lisp-related languages.
 
   https://mclide.com
+
+A prebuilt version of MCLIDE can be downloaded from the link above.
 
 == Build ==
 
@@ -38,5 +38,22 @@ Preliminary instructions to get started:
   8. Execute in the Terminal to build MCLIDE:
 
      $ sh ./build.sh
+
+
+== Usage ==
+
+  See instructions in the README file in the MCLIDE build for instructions on how to connect MCLIDE with a development environment or runtime.
+
+== Using with Clojure ==
+
+You can use Leiningen to start clojure with swank then connect from MCLIDE.
+
+If you use Leiningen 2 then add the following to the project.clj file:
+
+    :plugins [[lein-swank "1.4.5"]]
+
+Execute this on the command line to start swank, then after a brief moment connect to port 4005 from MCLIDE:
+
+    lein swank
 
 
