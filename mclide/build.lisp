@@ -87,6 +87,8 @@
   #+ignore
   (let ((asdf::*verbose-out* (or output-stream asdf::*verbose-out*)))
     (asdf:run-shell-command "~A" command))
+  (when output-stream
+    (format output-stream "~&$ ~A~%" command))
   (nth-value 1
              (ccl:external-process-status
                 (ccl:run-program "/bin/sh" (list "-c" command)
