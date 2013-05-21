@@ -1,11 +1,11 @@
-mclide
+MCLIDE
 ======
 
 Macintosh IDE for Lisp-related languages.
 
 Download prebuilt version:
 
-https://mclide.com
+  https://mclide.com
 
 == Build ==
 
