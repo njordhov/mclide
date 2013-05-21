@@ -953,6 +953,6 @@
 (ensure-proper-fileformat (merge-pathnames ";src;start-swank.lisp" *resources-path*))
 
 ;;;;;
-(write *short-version-string*)
+*short-version-string*
 ;;;;;
 ; END
