@@ -192,7 +192,9 @@
            :prompt "Where would you like to build MCLIDE?"
            :directory (directory-namestring (ccl::loading-file-source-file))))))
 
-(assert (not (probe-file *distribution*)))
+(assert (not (probe-file *distribution*)) ()
+  "An existing MCLIDE distribution should be removed before a new build: ~S" 
+  *distribution*)
 (create-directory *distribution*)
 (assert (probe-file *distribution*))
 
@@ -388,10 +390,9 @@
                                     (ccl::posix-namestring (ccl::dirpath-to-filepath *clozure-directory*))
                                     (ccl::posix-namestring (ccl::dirpath-to-filepath (merge-pathnames ";ccl;" *resources-path*)))))
 
-#+clz
+
 (defparameter *clozure-exec* (merge-pathnames ";ccl;dx86cl64" *resources-path*))
-#+clz
-(warn "Should also handle 32 bit Clozure!")
+; (warn "Should also handle 32 bit Clozure!")
 
 (assert (probe-file *clozure-exec*))
 
@@ -573,6 +574,7 @@
 
 (defun declare-plugin (name path)
   "Declares a file or bundle in the distribution to be a plugin"
+  (declare (special *mcl-path*))
   (let ((file (merge-pathnames (string path) (merge-pathnames ":Examples:.lisp" *mcl-path*)))
         (link (merge-pathnames name *plugins-disabled-folder*)))
     (assert (probe-file file) () "Missing plugin file: ~A" file)
