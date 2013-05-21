@@ -84,8 +84,14 @@
 
 #+ccl
 (defun execute-shell-command (command &key output-stream)
-  (declare (ignore output-stream))
-  (asdf:run-shell-command "~A" command))
+  #+ignore
+  (let ((asdf::*verbose-out* (or output-stream asdf::*verbose-out*)))
+    (asdf:run-shell-command "~A" command))
+  (nth-value 1
+             (ccl:external-process-status
+                (ccl:run-program "/bin/sh" (list "-c" command)
+                                 :input nil :output (or output-stream (make-broadcast-stream))
+                                 :wait t))))
 
 #+ccl
 (defun create-alias (pathname target &key relative debug)
