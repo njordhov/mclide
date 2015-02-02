@@ -9,7 +9,7 @@ A prebuilt version of MCLIDE can be downloaded from the link above.
 
 == Build ==
 
-MCLIDE 2.x runs on 64 bit OSX 10.6 and later.
+MCLIDE 2.x runs on OSX 10.6 and later.
 
 Preliminary instructions to get started:
 
