@@ -3,7 +3,7 @@ MCLIDE
 
 Macintosh IDE for Clojure and other Lisp-related languages.
 
-  https://mclide.com
+  https://www.mclide.com
 
 A prebuilt version of MCLIDE can be downloaded from the link above.
 
