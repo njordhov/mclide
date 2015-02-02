@@ -42,7 +42,12 @@ Preliminary instructions to get started:
 
 == Usage ==
 
-  See instructions in the README file in the MCLIDE build for instructions on how to connect MCLIDE with a development environment or runtime.
+See instructions in the README file in the MCLIDE build for instructions on how to connect MCLIDE with a development environment or runtime.
+  
+Note that it is essential to use a compatible version of Swank on the target Lisp runtime. Loading the start-swank.lisp file that comes with the MCLIDE2 distribution ensures the correct version of Swank on a local lisp runtime.
+
+For use with a Lisp runtime on a remote machine, there is a compatible swank server in the MCLIDE.app/Contents/Resources/Slime/ directory. Copy this directory to the remote machine, then load its start-swank.lisp file into the remote lisp. Connect from MCLIDE2 by opening a New Listener from the File menu, providing the ip address of the lisp host computer and the port shown when starting swank (and eventually the slime-secret if you have specified one).
+
 
 == Using with Clojure ==
 
