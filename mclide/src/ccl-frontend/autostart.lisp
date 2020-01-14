@@ -19,7 +19,7 @@
                       :logfile (logfile name)
                       :portfile (full-pathname portfile)))
          #+ignore (asdf::*VERBOSE-OUT* mclide::*log*))
-    (asdf::run-shell-command "(~S -L ~S -e ~S)&" path loader initform)
+    (uiop:run-program (format nil "(~S -L ~S -e ~S)&" path loader initform))
     portfile))
 
 (defmethod reset-from-portfile ((application remote::remote-application) portfile)
